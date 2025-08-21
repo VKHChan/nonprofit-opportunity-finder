@@ -1,0 +1,2 @@
+from .charity_intellence import WebScraperCharityIntellence
+from .generic import WebScraperGeneric

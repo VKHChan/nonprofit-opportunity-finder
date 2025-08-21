@@ -53,6 +53,7 @@ def build_settings(**kwargs) -> Settings:
         "SCRAPER_TIMEOUT": str(kwargs.get("scraper_timeout", 10000)),
         "SCRAPER_CONCURRENT_LIMIT": str(kwargs.get("scraper_concurrent_limit", 2)),
         "SCRAPER_HEADERS": '{"User-Agent": "Test Agent"}',
+        "SCRAPER_CONTENT_SELECTORS": ["test-selector"],
 
         # LLM settings
         "LLM_HOST": "anthropic",
