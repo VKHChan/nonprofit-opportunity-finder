@@ -60,9 +60,10 @@ class WebScraperCharityIntellence(WebScraper):
                 while True:
                     logger.info(
                         f"Collecting charity links..")
+
                     # Extract charity links from current page
-                    # charity_links = await self._aextract_charity_links(page)
-                    # all_charity_urls.extend(charity_links)
+                    charity_links = await self._aextract_charity_links(page)
+                    all_charity_urls.extend(charity_links)
 
                     logger.info(
                         f"Number of charity links added: {len(all_charity_urls)}")
@@ -128,6 +129,17 @@ class WebScraperCharityIntellence(WebScraper):
             logger.error(f"Error navigating to next page: {str(e)}")
             return False
 
+    async def _aextract_charity_links(self, page: Page) -> list[str]:
+        """Extract all charity links from the current page."""
+        # This is a placeholder - we'll need to identify the correct selector
+        charity_links = await page.eval_on_selector_all(
+            ".alpha_records.charity_list a.title.lnk",
+            "elements => elements.map(el => el.href)"
+        )
+        logger.info(
+            f"Found {len(charity_links)} charity links on page {self._current_page}")
+        return charity_links
+
     async def _get_text(self, page: Page, selector: str) -> str | None:
         """Safely extract text content from an element."""
         try:
@@ -158,14 +170,3 @@ class WebScraperCharityIntellence(WebScraper):
         file_name = charity_name.replace(" ", "_")
 
         return f"{file_name}_scraped.json"
-
-    async def _aextract_charity_links(self, page: Page) -> list[str]:
-        """Extract all charity links from the current page."""
-        # This is a placeholder - we'll need to identify the correct selector
-        charity_links = await page.eval_on_selector_all(
-            "selector-for-charity-links",
-            "elements => elements.map(el => el.href)"
-        )
-        logger.info(
-            f"Found {len(charity_links)} charity links on page {self._current_page}")
-        return charity_links

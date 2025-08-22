@@ -85,7 +85,7 @@ async def main():
 
     # Scrape non-profit organizations using the charity intelligence scraper
     charity_scraper = web_scraper_factory.get_charity_scraper()
-    charity_urls = await charity_scraper.aget_urls(start_page=1, end_page=3)
+    charity_urls = await charity_scraper.aget_urls(start_page=1, end_page=1)
     print(charity_urls)
 
     """scraping_result = await charity_scraper.ascrape_multiple(
