@@ -39,9 +39,6 @@ class WebScraper:
             urls: Optional list of specific charity URLs to scrape. If None, scrapes from listing pages
             file_path: Optional path where scraped data will be stored
         """
-        urls = await self._aget_urls(urls)
-        if not urls:
-            return self._get_statistics()
 
         async with async_playwright() as p:
             browser = await p.chromium.launch(headless=True)
@@ -63,10 +60,6 @@ class WebScraper:
 
     async def _aextract_content(self, page: Page) -> str:
         raise NotImplementedError
-
-    async def _aget_urls(self, urls: list[str], *args, **kwargs) -> list[str]:
-        # override this in the subclass if needed
-        return urls
 
     def _get_file_name(self, result: ScrapePageResult) -> str:
         # override this in the subclass if needed

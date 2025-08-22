@@ -3,9 +3,10 @@ import logging
 
 from configuration import Settings
 from core.storage import Storage
-from core.web_scrape import WebScraper
 from injector import inject
 from playwright.async_api import Page
+
+from .web_scraper import WebScraper
 
 logger = logging.getLogger(__name__)
 

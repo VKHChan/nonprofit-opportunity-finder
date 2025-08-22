@@ -102,7 +102,7 @@ class TestWebScraperGeneric:
         ]
 
         # Mock playwright context
-        with patch('core.web_scrape.async_playwright') as mock_playwright:
+        with patch('core.web_scraping.web_scraper.async_playwright') as mock_playwright:
             def create_success_page():
                 """Helper to create a fresh success page mock"""
                 page = AsyncMock()

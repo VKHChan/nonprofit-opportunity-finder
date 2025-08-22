@@ -13,7 +13,7 @@ from configuration import Settings
 from core.chat_model import ChatModelProvider
 from core.content_analysis import ContentAnalysisService
 from core.storage import Storage
-from core.web_scrape import WebScraper
+from core.web_scraping import WebScraperFactory
 from core.web_search import SearchEngine
 from infrastructure.service_collection import ServiceCollection
 
@@ -34,7 +34,7 @@ async def main():
     settings = service_provider.get(Settings)
     storage = service_provider.get(Storage)
     search_engine = service_provider.get(SearchEngine)
-    web_scraper = service_provider.get(WebScraper)
+    web_scraper_factory = service_provider.get(WebScraperFactory)
     content_analysis = service_provider.get(ContentAnalysisService)
     chat_model = service_provider.get(ChatModelProvider)
 
@@ -48,7 +48,7 @@ async def main():
     day = now.strftime("%d")
     folder_path = f"{year}/{month}/{day}"
 
-    # Perform search
+    """# Perform search
     results = await search_engine.search(query, folder_path)
 
     # Print results
@@ -61,8 +61,11 @@ async def main():
             print(f"Description: {result.description[:100]}...")
     else:
         print("No results found or an error occurred.")
+
+    # Scrape the results using the generic scraper
     if results:
-        scraping_result = await web_scraper.scrape_multiple(
+        generic_scraper = web_scraper_factory.get_generic_scraper()
+        scraping_result = await generic_scraper.ascrape_multiple(
             [result.url for result in results], folder_path)
         print(scraping_result)
 
@@ -78,7 +81,16 @@ async def main():
                     file_name, content, chat_model, folder_path)
                 print(analysis)
         else:
-            print("No successful scrapes found.")
+            print("No successful scrapes found.")"""
+
+    # Scrape non-profit organizations using the charity intelligence scraper
+    charity_scraper = web_scraper_factory.get_charity_scraper()
+    charity_urls = await charity_scraper.aget_urls(start_page=1, end_page=3)
+    print(charity_urls)
+
+    """scraping_result = await charity_scraper.ascrape_multiple(
+        charity_urls, folder_path)
+    print(scraping_result)"""
 
 
 if __name__ == "__main__":

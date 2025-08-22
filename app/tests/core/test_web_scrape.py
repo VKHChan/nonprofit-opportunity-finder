@@ -1,6 +1,6 @@
 import pytest
 from core.domain import ScrapingResult
-from core.web_scrape import WebScraper
+from core.web_scraping import WebScraper
 from tests.builders.web_scrape_builder import build_scrape_result
 
 

@@ -3,6 +3,11 @@ from unittest.mock import patch
 
 import pytest
 from configuration import Settings
+from core.web_scraping import (
+    WebScraperCharityIntellence,
+    WebScraperFactory,
+    WebScraperGeneric,
+)
 from core.web_search import SearchEngine
 from infrastructure.service_collection import ServiceCollection, ServiceProvider
 from tests.builders.build import Build
@@ -37,6 +42,16 @@ def test_resolving_web_search_services(service_provider: ServiceProvider):
     """Test that web search services can be resolved"""
     service_types = [
         SearchEngine,
+    ]
+    _test_resolving_services(service_types, service_provider)
+
+
+def test_resolving_web_scraper_services(service_provider: ServiceProvider):
+    """Test that web scraper services can be resolved"""
+    service_types = [
+        WebScraperFactory,
+        WebScraperGeneric,
+        WebScraperCharityIntellence,
     ]
     _test_resolving_services(service_types, service_provider)
 
